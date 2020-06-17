@@ -1,0 +1,71 @@
+MODULE main
+ VAR
+  pi1 : boolean;
+  pi2 : boolean;
+  pi3 : boolean;
+  pi4 : boolean;
+  robot_1 : process robot(4);
+ ASSIGN
+  init(pi1) := TRUE;
+  init(pi2) := FALSE;
+  init(pi3) := FALSE;
+  init(pi4) := FALSE;
+  next(pi1) := case
+		      robot_1.state = 1 | robot_1.state = 4 : TRUE;
+		      TRUE : FALSE;
+		    esac;
+  next(pi2) := case
+		      robot_1.state = 19 | robot_1.state = 21 : TRUE;
+		      TRUE : FALSE;
+		    esac;
+  next(pi3) := case
+		      robot_1.state = 8 : TRUE;
+		      TRUE : FALSE;
+		    esac;
+  next(pi4) := case
+		      robot_1.state = 25 | robot_1.state = 27 : TRUE;
+		      TRUE : FALSE;
+		    esac;
+  
+ LTLSPEC ! ( F ( pi2 & F ( pi3 & F ( pi4 & ( ! pi2 & ! pi3 ) U pi1 ) ) ) )
+
+ MODULE robot(init_cond)
+ VAR
+  state: 1 .. 32;
+ ASSIGN
+  init(state) := 4;
+  next(state) := case
+		      state = 1 : {11, 10, 4};
+		      state = 2 : {8, 10, 7};
+		      state = 3 : {15, 17, 19};
+		      state = 4 : {1, 17, 16};
+		      state = 5 : {26, 8, 9};
+		      state = 6 : {9, 8, 12};
+		      state = 7 : {11, 12, 2};
+		      state = 8 : {5, 2, 6};
+		      state = 9 : {5, 6, 28};
+		      state = 10 : {2, 13, 1};
+		      state = 11 : {7, 1, 16};
+		      state = 12 : {7, 6};
+		      state = 13 : {10, 26, 18};
+		      state = 14 : {24, 23, 21};
+		      state = 15 : {3, 23, 16};
+		      state = 16 : {4, 15, 11};
+		      state = 17 : {3, 4, 18};
+		      state = 18 : {17, 13, 20};
+		      state = 19 : {21, 3, 30};
+		      state = 20 : {27, 30, 18};
+		      state = 21 : {14, 19, 24};
+		      state = 22 : {32, 29, 27};
+		      state = 23 : {15, 14};
+		      state = 24 : {31, 14, 21};
+		      state = 25 : {32, 27, 26};
+		      state = 26 : {5, 25, 13};
+		      state = 27 : {22, 20, 25};
+		      state = 28 : {32, 9};
+		      state = 29 : {22, 31, 30};
+		      state = 30 : {20, 29, 19};
+		      state = 31 : {24, 29};
+		      state = 32 : {28, 22, 25};
+		    esac;
+  

@@ -1,0 +1,39 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+\begin{document}
+\begin{algorithm}
+\caption{Post Smoothing}\label{euclid}
+\begin{algorithmic}[1]
+\Procedure{Post Smoothing}{}
+\For {\textit{each valid\_state s}}
+\State {\textit{valid\_successor} $\gets$ \textit{successor(s)}}
+\State {\textit{safe} $\gets$ \textit{True}}
+\State {\textit{stop} $\gets$ \textit{False}}
+\For {\textit{each successor(s) next and safe not False and stop not True}}
+\State {$\textit{line} \gets \textit{segment(s,next)}$}
+\For{\textit{ecah room} $\pi$}
+\State{\textit{inter} $\gets$ \textit{intersection(line,}$\pi$)}
+\If{\textit{inter not 0 and s and next not in} $\pi$}
+\State{\textit{safe} $\gets$ \textit{False}}
+\EndIf
+\If{\textit{inter not 0 and next in} $\pi$}
+\State{\textit{stop} $\gets$ \textit{True}}
+\EndIf
+\EndFor
+\If{\textit{safe}}
+\State{\textit{valid\_successor} $\gets$ \textit{next}}
+\State{\textit{s} $\gets$ \textit{valid\_successor}}
+\EndIf
+\EndFor
+\EndFor
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+\end{document} 

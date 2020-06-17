@@ -1,0 +1,83 @@
+MODULE main
+ VAR
+  pi1 : boolean;
+  pi2 : boolean;
+  pi3 : boolean;
+  pi4 : boolean;
+  pi5 : boolean;
+  pi6 : boolean;
+  state: 1 .. 38;
+ASSIGN
+  init(state) := 24;
+  init(pi1) := FALSE;
+  init(pi2) := TRUE;
+  init(pi3) := FALSE;
+  init(pi4) := FALSE;
+  init(pi5) := FALSE;
+  init(pi6) := FALSE;
+  next(pi1) := case
+		      state = 1 | state = 18 : TRUE;
+		      TRUE : FALSE;
+		    esac;
+  next(pi2) := case
+		      state = 24 | state = 25 : TRUE;
+		      TRUE : FALSE;
+		    esac;
+  next(pi3) := case
+		      state = 11 : TRUE;
+		      TRUE : FALSE;
+		    esac;
+  next(pi4) := case
+		      state = 32 | state = 34 : TRUE;
+		      TRUE : FALSE;
+		    esac;
+  next(pi5) := case
+		      state = 6 | state = 19 : TRUE;
+		      TRUE : FALSE;
+		    esac;
+  next(pi6) := case
+		      state = 14 | state = 31 : TRUE;
+		      TRUE : FALSE;
+		    esac;
+  next(state) := case
+		      state = 1 : {16, 3, 18};
+		      state = 2 : {11, 3, 17};
+		      state = 3 : {2, 6, 1};
+		      state = 4 : {28, 27, 25};
+		      state = 5 : {18, 22, 16};
+		      state = 6 : {9, 19, 3};
+		      state = 7 : {13, 9, 11};
+		      state = 8 : {15, 13, 11};
+		      state = 9 : {6, 7, 31};
+		      state = 10 : {31, 33, 38};
+		      state = 11 : {8, 7, 2};
+		      state = 12 : {18, 19, 23};
+		      state = 13 : {7, 8, 33};
+		      state = 14 : {30, 31, 34};
+		      state = 15 : {17, 8};
+		      state = 16 : {1, 5, 17};
+		      state = 17 : {2, 16, 15};
+		      state = 18 : {5, 1, 12};
+		      state = 19 : {30, 12, 6};
+		      state = 20 : {36, 21, 32};
+		      state = 21 : {20, 29, 30};
+		      state = 22 : {27, 5, 23};
+		      state = 23 : {29, 22, 12};
+		      state = 24 : {25, 29, 36};
+		      state = 25 : {4, 24, 28};
+		      state = 26 : {38, 35, 32};
+		      state = 27 : {22, 4};
+		      state = 28 : {37, 4, 25};
+		      state = 29 : {24, 23, 21};
+		      state = 30 : {14, 21, 19};
+		      state = 31 : {14, 9, 10};
+		      state = 32 : {20, 34, 26};
+		      state = 33 : {10, 13};
+		      state = 34 : {14, 38, 32};
+		      state = 35 : {26, 37, 36};
+		      state = 36 : {20, 35, 24};
+		      state = 37 : {28, 35};
+		      state = 38 : {10, 26, 34};
+		    esac;
+  
+ LTLSPEC ! ( ( ! pi5 & ! pi6 & !pi4 & ! pi1 ) U pi3 )
